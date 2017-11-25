@@ -44,5 +44,6 @@
 #
 class systemd_networkd {
 
+  ensure_resource('service', 'systemd-networkd', { 'ensure' => 'running', 'enable' => 'true' })
 
 }

@@ -1,0 +1,11 @@
+[Match]
+<% if @match_mac_address != '' %>
+MACAddress=<%= @match_mac_address %>
+<% end %>
+<% if @match_original_name != '' %>
+OriginalName=<%= @match_original_name %>
+<% end %>
+
+[Link]
+Description=<%= @link_description %>
+Name=<%= @link_name %>
