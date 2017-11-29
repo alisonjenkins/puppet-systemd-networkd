@@ -42,8 +42,21 @@
 #
 # Copyright 2017 Your name here, unless otherwise noted.
 #
-class systemd_networkd {
+class systemd_networkd(
+  Boolean $use_resolved = true,
+){
 
-  ensure_resource('service', 'systemd-networkd', { 'ensure' => 'running', 'enable' => 'true' })
+  ensure_resource('service', 'systemd-networkd', { 'ensure' => 'running', 'enable' => true })
+
+  if ($use_resolved) {
+    ensure_resource('service', 'systemd-resolved', { 'ensure' => 'running', 'enable' => true })
+
+    file { 'symlink resolv.conf to systemd-resolved resolv.conf':
+      ensure  => link,
+      path    => '/etc/resolv.conf',
+      target  => '/run/systemd/resolve/resolv.conf',
+      replace => true,
+    }
+  }
 
 }
