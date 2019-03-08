@@ -43,7 +43,7 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class systemd_networkd(
-  Boolean $use_resolved = true,
+  Boolean $use_resolved = false,
 ){
 
   ensure_resource('service', 'systemd-networkd', { 'ensure' => 'running', 'enable' => true })
@@ -57,6 +57,8 @@ class systemd_networkd(
       target  => '/run/systemd/resolve/resolv.conf',
       replace => true,
     }
+  } else {
+    ensure_resource('service', 'systemd-resolved', { 'ensure' => 'stopped', 'enable' => false })
   }
 
 }
